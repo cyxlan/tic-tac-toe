@@ -17,9 +17,16 @@ function Gameboard() {
     console.log(boardFormatted);
   }
 
+  // takes position as [row, column] coordinates of cell
+  const placeMark = (player, pos) => {
+    const selectedCell = board[pos[0]][pos[1]];
+    selectedCell.addMark(player);
+  }
+
   return {
     getBoard,
-    printBoard
+    printBoard,
+    placeMark
   }
 }
 
@@ -28,8 +35,13 @@ function Cell() {
 
   const getValue = () => value;
 
+  const addMark = (player) => {
+    value = player.mark;
+  };
+
   return {
-    getValue
+    getValue,
+    addMark
   }
 }
 
