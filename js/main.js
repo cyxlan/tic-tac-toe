@@ -1,4 +1,4 @@
-const Gameboard = (function() {
+function Gameboard() {
   const board = [];
 
   // make 3x3 2D array of cells
@@ -21,7 +21,7 @@ const Gameboard = (function() {
     getBoard,
     printBoard
   }
-})();
+}
 
 function Cell() {
   let value = "-"; // default for empty cell
@@ -32,3 +32,18 @@ function Cell() {
     getValue
   }
 }
+
+const GameController = (function() {
+  const board = Gameboard();
+
+  const players = [
+    {
+      "name": "Player One",
+      "mark": "X"
+    },
+    {
+      "name": "Player Two",
+      "mark": "O"
+    }
+  ]
+})();
