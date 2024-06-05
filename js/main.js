@@ -11,10 +11,24 @@ const Gameboard = (function() {
 
   const getBoard = () => board;
 
+  // print board with cell values to console
+  const printBoard = () => {
+    const boardFormatted = board.map((row) => row.map((cell) => cell.getValue()).join("")).join("\n");
+    console.log(boardFormatted);
+  }
+
   return {
-    getBoard
+    getBoard,
+    printBoard
   }
 })();
 
 function Cell() {
+  let value = "-"; // default for empty cell
+
+  const getValue = () => value;
+
+  return {
+    getValue
+  }
 }
