@@ -58,4 +58,26 @@ const GameController = (function() {
       "mark": "O"
     }
   ]
+  let activePlayer = players[0];
+
+  const switchPlayer = () => {
+    activePlayer = activePlayer === players[0] ? players[1] : players[0];
+  }
+
+  const printRound = () => {
+    board.printBoard();
+    console.log(`${activePlayer.name}'s turn`);
+  }
+
+  const playRound = (cellPos) => {
+    board.placeMark(activePlayer, cellPos);
+    switchPlayer();
+    printRound();
+  }
+
+  printRound();
+
+  return {
+    playRound
+  }
 })();
