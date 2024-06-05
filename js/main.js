@@ -17,15 +17,19 @@ function Gameboard() {
     console.log(boardFormatted);
   }
 
-  // takes position as [row, column] coordinates of cell
+  // get cell at position [row, column] coordinates
+  const getCell = (pos) => {
+    return board[pos[0]][pos[1]];
+  }
+
   const placeMark = (player, pos) => {
-    const selectedCell = board[pos[0]][pos[1]];
-    selectedCell.addMark(player);
+    getCell(pos).addMark(player);
   }
 
   return {
     getBoard,
     printBoard,
+    getCell,
     placeMark
   }
 }
@@ -70,9 +74,15 @@ const GameController = (function() {
   }
 
   const playRound = (cellPos) => {
-    board.placeMark(activePlayer, cellPos);
-    switchPlayer();
-    printRound();
+    // prevent playing on a spot that's already marked
+    if (board.getCell(cellPos).getValue() !== "-") {
+      console.log("Spot already taken");
+    }
+    else {
+      board.placeMark(activePlayer, cellPos);
+      switchPlayer();
+      printRound();
+    }
   }
 
   printRound();
