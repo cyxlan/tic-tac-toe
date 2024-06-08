@@ -90,8 +90,10 @@ function GameController() {
       const gameOverCheck = checkForGameOver(cellPos);
       if (gameOverCheck === "win") {
         printRound(`${activePlayer.name} wins!`);
+        return `${activePlayer.name} wins!`;
       } else if (gameOverCheck === "draw") {
         printRound("It's a draw!");
+        return "It's a draw!";
       } else {
         switchPlayer();
         printRound();
@@ -162,11 +164,12 @@ const displayController = (function() {
   const msgHeader = document.querySelector('#message');
   const boardDiv = document.querySelector('#board');
 
-  const updateDisplay = () => {
+  const updateDisplay = (msg) => {
     const board = game.getBoard();
+    const activePlayer = game.getActivePlayer();
 
-    const player = game.getActivePlayer();
-    msgHeader.textContent = `${player.name}'s turn (${player.mark})`;
+    // if message is unset (not win or draw state), display current player turn
+    msgHeader.textContent = msg ? msg : `${activePlayer.name}'s turn (${activePlayer.mark})`;
 
     boardDiv.textContent = "";
     // generate cell buttons
@@ -185,8 +188,7 @@ const displayController = (function() {
 
   function btnClickHandler(e) {
     const index = e.target.dataset.index.split(",");
-    game.playRound(index);
-    updateDisplay();
+    updateDisplay(game.playRound(index));
   }
 
   updateDisplay();
