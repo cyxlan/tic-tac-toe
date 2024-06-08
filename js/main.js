@@ -171,9 +171,17 @@ const displayController = (function() {
         cellBtn.dataset.index = `${rowIndex},${cellIndex}`;
         cellBtn.classList.add("cell");
         cellBtn.textContent = cell.getValue();
+        cellBtn.addEventListener("click", btnClickHandler);
         boardDiv.appendChild(cellBtn);
       })
     })
   }
+
+  function btnClickHandler(e) {
+    const index = e.target.dataset.index.split(",");
+    game.playRound(index);
+    updateDisplay();
+  }
+
   updateDisplay();
 })();
