@@ -72,6 +72,7 @@ function GameController() {
   const switchPlayer = () => {
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
   }
+  const getActivePlayer = () => activePlayer;
 
   const printRound = (msg = `${activePlayer.name}'s turn`) => {
     board.printBoard();
@@ -151,16 +152,21 @@ function GameController() {
 
   return {
     playRound,
+    getActivePlayer,
     getBoard: board.getBoard
   }
 }
 
 const displayController = (function() {
   const game = GameController();
+  const msgHeader = document.querySelector('#message');
   const boardDiv = document.querySelector('#board');
 
   const updateDisplay = () => {
     const board = game.getBoard();
+
+    const player = game.getActivePlayer();
+    msgHeader.textContent = `${player.name}'s turn (${player.mark})`;
 
     boardDiv.textContent = "";
     // generate cell buttons
