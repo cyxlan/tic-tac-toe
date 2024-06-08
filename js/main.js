@@ -168,10 +168,17 @@ const displayController = (function() {
     const board = game.getBoard();
     const activePlayer = game.getActivePlayer();
 
-    // if message is unset (not win or draw state), display current player turn
-    msgHeader.textContent = msg ? msg : `${activePlayer.name}'s turn (${activePlayer.mark})`;
+    let gameOver = false;
+    // if message is set (win or draw state), the game has ended
+    if (msg) {
+      gameOver = true;
+    } else {
+      msg = `${activePlayer.name}'s turn (${activePlayer.mark})`;
+    }
 
+    msgHeader.textContent = msg;
     boardDiv.textContent = "";
+    
     // generate cell buttons
     board.forEach((row, rowIndex) => {
       row.forEach((cell, cellIndex) => {
@@ -180,7 +187,12 @@ const displayController = (function() {
         cellBtn.dataset.index = `${rowIndex},${cellIndex}`;
         cellBtn.classList.add("cell");
         cellBtn.textContent = cell.getValue();
-        cellBtn.addEventListener("click", btnClickHandler);
+        // if game has ended, disable buttons
+        if (gameOver) {
+          cellBtn.disabled = true;
+        } else {
+          cellBtn.addEventListener("click", btnClickHandler);
+        }
         boardDiv.appendChild(cellBtn);
       })
     })
