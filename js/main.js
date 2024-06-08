@@ -11,9 +11,13 @@ function Gameboard() {
 
   const getBoard = () => board;
 
+  const getBoardValues = () => {
+    return board.map((row) => row.map((cell) => cell.getValue()));
+  }
+
   // print board with cell values to console
   const printBoard = () => {
-    const boardFormatted = board.map((row) => row.map((cell) => cell.getValue()).join("")).join("\n");
+    const boardFormatted = getBoardValues().map((x) => x.join("")).join("\n");
     console.log(boardFormatted);
   }
 
@@ -28,6 +32,7 @@ function Gameboard() {
 
   return {
     getBoard,
+    getBoardValues,
     printBoard,
     getCell,
     placeMark
@@ -68,9 +73,9 @@ const GameController = (function() {
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
   }
 
-  const printRound = () => {
+  const printRound = (msg = `${activePlayer.name}'s turn`) => {
     board.printBoard();
-    console.log(`${activePlayer.name}'s turn`);
+    console.log(msg);
   }
 
   const playRound = (cellPos) => {
@@ -80,9 +85,59 @@ const GameController = (function() {
     }
     else {
       board.placeMark(activePlayer, cellPos);
-      switchPlayer();
-      printRound();
+
+      if (checkForGameOver(cellPos)) {
+        printRound(`${activePlayer.name} wins!`);
+      } else {
+        switchPlayer();
+        printRound();
+      }
     }
+  }
+  
+  const checkForGameOver = (lastMove) => {
+    const boardValues = board.getBoardValues();
+    const mark = activePlayer.mark;
+
+    // check if last move completed 3 in a line
+    // row of last move
+    if (boardValues[lastMove[0]][0] === mark &&
+        boardValues[lastMove[0]][1] === mark && 
+        boardValues[lastMove[0]][2] === mark
+      ) {
+        return true;
+      }
+    // column of last move
+    if (boardValues[0][lastMove[1]] === mark &&
+        boardValues[1][lastMove[1]] === mark && 
+        boardValues[2][lastMove[1]] === mark
+      ) {
+        return true;
+    }
+    // if last move was top left or bottom right corner
+    if (lastMove[0] === lastMove[1]) {
+      // top left to bottom right diagonal
+      if (boardValues[0][0] === mark &&
+          boardValues[1][1] === mark &&
+          boardValues[2][2] === mark
+      ) {
+        return true;
+      }
+    }
+    // if last move was top right or bottom left corner
+    else if (
+      lastMove[0] === 0 && lastMove[1] === 2 ||
+      lastMove[0] === 2 && lastMove[1] === 2
+    ) {
+      // top right to bottom left diagonal
+      if (boardValues[0][0] === mark &&
+          boardValues[1][1] === mark &&
+          boardValues[2][2] === mark
+      ) {
+        return true;
+      }
+    }
+    return false;
   }
 
   printRound();
