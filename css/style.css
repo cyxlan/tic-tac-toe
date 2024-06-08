@@ -1,0 +1,11 @@
+#board {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  width: max-content;
+  gap: 2px;
+  .cell {
+    height: 100px;
+    width: 100px;
+    outline: 2px solid #000;
+  }
+}
