@@ -54,7 +54,7 @@ function Cell() {
   }
 }
 
-const GameController = (function() {
+function GameController() {
   const board = Gameboard();
 
   const players = [
@@ -150,6 +150,30 @@ const GameController = (function() {
   printRound();
 
   return {
-    playRound
+    playRound,
+    getBoard: board.getBoard
   }
+}
+
+const displayController = (function() {
+  const game = GameController();
+  const boardDiv = document.querySelector('#board');
+
+  const updateDisplay = () => {
+    const board = game.getBoard();
+
+    boardDiv.textContent = "";
+    // generate cell buttons
+    board.forEach((row, rowIndex) => {
+      row.forEach((cell, cellIndex) => {
+        const cellBtn = document.createElement("button");
+        cellBtn.setAttribute("type", "button");
+        cellBtn.dataset.index = `${rowIndex},${cellIndex}`;
+        cellBtn.classList.add("cell");
+        cellBtn.textContent = cell.getValue();
+        boardDiv.appendChild(cellBtn);
+      })
+    })
+  }
+  updateDisplay();
 })();
