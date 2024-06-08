@@ -86,8 +86,11 @@ const GameController = (function() {
     else {
       board.placeMark(activePlayer, cellPos);
 
-      if (checkForGameOver(cellPos)) {
+      const gameOverCheck = checkForGameOver(cellPos);
+      if (gameOverCheck === "win") {
         printRound(`${activePlayer.name} wins!`);
+      } else if (gameOverCheck === "draw") {
+        printRound("It's a draw!");
       } else {
         switchPlayer();
         printRound();
@@ -105,14 +108,14 @@ const GameController = (function() {
         boardValues[lastMove[0]][1] === mark && 
         boardValues[lastMove[0]][2] === mark
       ) {
-        return true;
+        return "win";
       }
     // column of last move
     if (boardValues[0][lastMove[1]] === mark &&
         boardValues[1][lastMove[1]] === mark && 
         boardValues[2][lastMove[1]] === mark
       ) {
-        return true;
+        return "win";
     }
     // if last move was top left or bottom right corner
     if (lastMove[0] === lastMove[1]) {
@@ -121,7 +124,7 @@ const GameController = (function() {
           boardValues[1][1] === mark &&
           boardValues[2][2] === mark
       ) {
-        return true;
+        return "win";
       }
     }
     // if last move was top right or bottom left corner
@@ -134,8 +137,12 @@ const GameController = (function() {
           boardValues[1][1] === mark &&
           boardValues[2][2] === mark
       ) {
-        return true;
+        return "win";
       }
+    }
+    // if there are no empty spots but no one won, it's a draw
+    if (!boardValues.flat().includes("-")) {
+      return "draw";
     }
     return false;
   }
