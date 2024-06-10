@@ -83,17 +83,17 @@ function GameController() {
     // prevent playing on a spot that's already marked
     if (board.getCell(cellPos).getValue() !== "-") {
       console.log("Spot already taken");
+      return;
     }
     else {
       board.placeMark(activePlayer, cellPos);
 
       const gameOverState = checkForGameOver(cellPos);
-      if (gameOverState !== false) {
-        return gameOverState;
-      } else {
+      if (gameOverState === false) {
         switchPlayer();
         printRound();
       }
+      return gameOverState;
     }
   }
   
@@ -157,43 +157,53 @@ function GameController() {
 
 const displayController = (function() {
   const game = GameController();
-  const msgHeader = document.querySelector('#message');
+  const gameStateHeader = document.querySelector('#game-state');
+  const spotTakenMsg = document.querySelector('#spot-taken');
   const boardDiv = document.querySelector('#board');
 
   const updateDisplay = (gameOverState) => {
     const board = game.getBoard();
     const activePlayer = game.getActivePlayer();
-
-    if (gameOverState) {
-      if (gameOverState === "win") {
-        msg = `${activePlayer.name} wins!`
-      } else {
-        msg = "It's a draw!"
-      }
-    } else {
-      msg = `${activePlayer.name}'s turn (${activePlayer.mark})`;
-    }
-
-    msgHeader.textContent = msg;
-    boardDiv.textContent = "";
     
-    // generate cell buttons
-    board.forEach((row, rowIndex) => {
-      row.forEach((cell, cellIndex) => {
-        const cellBtn = document.createElement("button");
-        cellBtn.setAttribute("type", "button");
-        cellBtn.dataset.index = `${rowIndex},${cellIndex}`;
-        cellBtn.classList.add("cell");
-        cellBtn.textContent = cell.getValue();
-        // if game has ended, disable buttons
-        if (gameOverState) {
-          cellBtn.disabled = true;
+    // if we didn't make it to the game over check,
+    // that means the player tried to play on an already taken spot
+    if (gameOverState === undefined) {
+      spotTakenMsg.style.display = "block";
+    } else {
+      spotTakenMsg.style.display = "none";
+
+      // update header message
+      if (gameOverState) {
+        if (gameOverState === "win") {
+          gameStateMsg = `${activePlayer.name} wins!`
         } else {
-          cellBtn.addEventListener("click", btnClickHandler);
+          gameStateMsg = "It's a draw!"
         }
-        boardDiv.appendChild(cellBtn);
+      } else {
+        gameStateMsg = `${activePlayer.name}'s turn (${activePlayer.mark})`;
+      }
+
+      gameStateHeader.textContent = gameStateMsg;
+      boardDiv.textContent = "";
+      
+      // generate cell buttons
+      board.forEach((row, rowIndex) => {
+        row.forEach((cell, cellIndex) => {
+          const cellBtn = document.createElement("button");
+          cellBtn.setAttribute("type", "button");
+          cellBtn.dataset.index = `${rowIndex},${cellIndex}`;
+          cellBtn.classList.add("cell");
+          cellBtn.textContent = cell.getValue();
+          // if game has ended, disable buttons
+          if (gameOverState) {
+            cellBtn.disabled = true;
+          } else {
+            cellBtn.addEventListener("click", btnClickHandler);
+          }
+          boardDiv.appendChild(cellBtn);
+        })
       })
-    })
+    }
   }
 
   function btnClickHandler(e) {
@@ -201,5 +211,5 @@ const displayController = (function() {
     updateDisplay(game.playRound(index));
   }
 
-  updateDisplay();
+  updateDisplay(gameOverState=false);
 })();

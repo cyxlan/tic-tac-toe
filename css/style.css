@@ -9,3 +9,7 @@
     outline: 2px solid #000;
   }
 }
+
+#spot-taken {
+  display: none;
+}
