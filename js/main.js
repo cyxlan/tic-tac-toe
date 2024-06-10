@@ -87,13 +87,9 @@ function GameController() {
     else {
       board.placeMark(activePlayer, cellPos);
 
-      const gameOverCheck = checkForGameOver(cellPos);
-      if (gameOverCheck === "win") {
-        printRound(`${activePlayer.name} wins!`);
-        return `${activePlayer.name} wins!`;
-      } else if (gameOverCheck === "draw") {
-        printRound("It's a draw!");
-        return "It's a draw!";
+      const gameOverState = checkForGameOver(cellPos);
+      if (gameOverState !== false) {
+        return gameOverState;
       } else {
         switchPlayer();
         printRound();
@@ -164,14 +160,16 @@ const displayController = (function() {
   const msgHeader = document.querySelector('#message');
   const boardDiv = document.querySelector('#board');
 
-  const updateDisplay = (msg) => {
+  const updateDisplay = (gameOverState) => {
     const board = game.getBoard();
     const activePlayer = game.getActivePlayer();
 
-    let gameOver = false;
-    // if message is set (win or draw state), the game has ended
-    if (msg) {
-      gameOver = true;
+    if (gameOverState) {
+      if (gameOverState === "win") {
+        msg = `${activePlayer.name} wins!`
+      } else {
+        msg = "It's a draw!"
+      }
     } else {
       msg = `${activePlayer.name}'s turn (${activePlayer.mark})`;
     }
@@ -188,7 +186,7 @@ const displayController = (function() {
         cellBtn.classList.add("cell");
         cellBtn.textContent = cell.getValue();
         // if game has ended, disable buttons
-        if (gameOver) {
+        if (gameOverState) {
           cellBtn.disabled = true;
         } else {
           cellBtn.addEventListener("click", btnClickHandler);
