@@ -67,6 +67,10 @@ function GameController() {
   }
   const getActivePlayer = () => activePlayer;
 
+  const renamePlayer = (playerIndex, name) => {
+    players[playerIndex].name = name;
+  }
+
   const playRound = (cellPos) => {
     // prevent playing on a spot that's already marked
     if (board.getCell(cellPos).getValue() !== " ") {
@@ -135,6 +139,7 @@ function GameController() {
   return {
     playRound,
     getActivePlayer,
+    renamePlayer,
     getBoard: board.getBoard
   }
 }
@@ -144,6 +149,7 @@ const displayController = (function() {
   const gameStateHeader = document.querySelector('#game-state');
   const spotTakenMsg = document.querySelector('#spot-taken');
   const boardDiv = document.querySelector('#board');
+  const renameBtns = document.querySelectorAll('.rename-btn');
 
   const updateDisplay = (gameOverState) => {
     const board = game.getBoard();
@@ -182,7 +188,7 @@ const displayController = (function() {
           if (gameOverState) {
             cellBtn.disabled = true;
           } else {
-            cellBtn.addEventListener("click", btnClickHandler);
+            cellBtn.addEventListener("click", gameboardClickHandler);
           }
           boardDiv.appendChild(cellBtn);
         })
@@ -190,10 +196,19 @@ const displayController = (function() {
     }
   }
 
-  function btnClickHandler(e) {
+  function gameboardClickHandler(e) {
     const index = e.target.dataset.index.split(",");
     updateDisplay(game.playRound(index));
   }
+
+  renameBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const newName = prompt("New name:");
+      game.renamePlayer(btn.dataset.playerIndex, newName);
+      // update button text
+      btn.lastChild.textContent = newName;
+    })
+  })
 
   updateDisplay(gameOverState=false);
 })();

@@ -13,3 +13,7 @@
 #spot-taken {
   display: none;
 }
+
+.rename-btn {
+  border: 1px solid #000;
+}
