@@ -15,12 +15,6 @@ function Gameboard() {
     return board.map((row) => row.map((cell) => cell.getValue()));
   }
 
-  // print board with cell values to console
-  const printBoard = () => {
-    const boardFormatted = getBoardValues().map((x) => x.join("")).join("\n");
-    console.log(boardFormatted);
-  }
-
   // get cell at position [row, column] coordinates
   const getCell = (pos) => {
     return board[pos[0]][pos[1]];
@@ -33,14 +27,13 @@ function Gameboard() {
   return {
     getBoard,
     getBoardValues,
-    printBoard,
     getCell,
     placeMark
   }
 }
 
 function Cell() {
-  let value = "-"; // default for empty cell
+  let value = " "; // default for empty cell
 
   const getValue = () => value;
 
@@ -74,15 +67,9 @@ function GameController() {
   }
   const getActivePlayer = () => activePlayer;
 
-  const printRound = (msg = `${activePlayer.name}'s turn`) => {
-    board.printBoard();
-    console.log(msg);
-  }
-
   const playRound = (cellPos) => {
     // prevent playing on a spot that's already marked
-    if (board.getCell(cellPos).getValue() !== "-") {
-      console.log("Spot already taken");
+    if (board.getCell(cellPos).getValue() !== " ") {
       return;
     }
     else {
@@ -91,7 +78,6 @@ function GameController() {
       const gameOverState = checkForGameOver(cellPos);
       if (gameOverState === false) {
         switchPlayer();
-        printRound();
       }
       return gameOverState;
     }
@@ -140,13 +126,11 @@ function GameController() {
       }
     }
     // if there are no empty spots but no one won, it's a draw
-    if (!boardValues.flat().includes("-")) {
+    if (!boardValues.flat().includes(" ")) {
       return "draw";
     }
     return false;
   }
-
-  printRound();
 
   return {
     playRound,
