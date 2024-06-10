@@ -74,7 +74,7 @@ function GameController() {
   const playRound = (cellPos) => {
     // prevent playing on a spot that's already marked
     if (board.getCell(cellPos).getValue() !== " ") {
-      return;
+      throw "Spot already taken";
     }
     else {
       board.placeMark(activePlayer, cellPos);
@@ -155,50 +155,57 @@ const displayController = (function() {
     const board = game.getBoard();
     const activePlayer = game.getActivePlayer();
     
-    // if we didn't make it to the game over check,
-    // that means the player tried to play on an already taken spot
-    if (gameOverState === undefined) {
+    // update header message
+    if (gameOverState) {
+      if (gameOverState === "win") {
+        gameStateMsg = `${activePlayer.name} wins!`
+      } else {
+        gameStateMsg = "It's a draw!"
+      }
+    } else {
+      gameStateMsg = `${activePlayer.name}'s turn (${activePlayer.mark})`;
+    }
+
+    gameStateHeader.textContent = gameStateMsg;
+    boardDiv.textContent = "";
+    
+    // generate cell buttons
+    board.forEach((row, rowIndex) => {
+      row.forEach((cell, cellIndex) => {
+        const cellBtn = document.createElement("button");
+        cellBtn.setAttribute("type", "button");
+        cellBtn.dataset.index = `${rowIndex},${cellIndex}`;
+        cellBtn.classList.add("cell");
+        cellBtn.textContent = cell.getValue();
+        // if game has ended, disable buttons
+        if (gameOverState) {
+          cellBtn.disabled = true;
+        } else {
+          cellBtn.addEventListener("click", gameboardClickHandler);
+        }
+        boardDiv.appendChild(cellBtn);
+      })
+    })
+  }
+
+  function toggleSpotTakenMsg(shown) {
+    if (shown) {
       spotTakenMsg.style.display = "block";
     } else {
       spotTakenMsg.style.display = "none";
-
-      // update header message
-      if (gameOverState) {
-        if (gameOverState === "win") {
-          gameStateMsg = `${activePlayer.name} wins!`
-        } else {
-          gameStateMsg = "It's a draw!"
-        }
-      } else {
-        gameStateMsg = `${activePlayer.name}'s turn (${activePlayer.mark})`;
-      }
-
-      gameStateHeader.textContent = gameStateMsg;
-      boardDiv.textContent = "";
-      
-      // generate cell buttons
-      board.forEach((row, rowIndex) => {
-        row.forEach((cell, cellIndex) => {
-          const cellBtn = document.createElement("button");
-          cellBtn.setAttribute("type", "button");
-          cellBtn.dataset.index = `${rowIndex},${cellIndex}`;
-          cellBtn.classList.add("cell");
-          cellBtn.textContent = cell.getValue();
-          // if game has ended, disable buttons
-          if (gameOverState) {
-            cellBtn.disabled = true;
-          } else {
-            cellBtn.addEventListener("click", gameboardClickHandler);
-          }
-          boardDiv.appendChild(cellBtn);
-        })
-      })
     }
   }
 
   function gameboardClickHandler(e) {
     const index = e.target.dataset.index.split(",");
-    updateDisplay(game.playRound(index));
+    
+    // if playRound failed, the play was invalid due to being on an already taken spot
+    try {
+      updateDisplay(game.playRound(index));
+      toggleSpotTakenMsg(false);
+    } catch {
+      toggleSpotTakenMsg(true);
+    }
   }
 
   renameBtns.forEach((btn) => {
@@ -207,8 +214,9 @@ const displayController = (function() {
       game.renamePlayer(btn.dataset.playerIndex, newName);
       // update button text
       btn.lastChild.textContent = newName;
+      updateDisplay();
     })
   })
 
-  updateDisplay(gameOverState=false);
+  updateDisplay();
 })();
