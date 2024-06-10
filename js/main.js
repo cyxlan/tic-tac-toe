@@ -1,11 +1,13 @@
 function Gameboard() {
   const board = [];
 
-  // make 3x3 2D array of cells
-  for (let i = 0; i < 3; i++) {
-    board[i] = [];
-    for (let j = 0; j < 3; j++) {
-      board[i].push(Cell());
+  const initializeBoard = () => {
+    // make 3x3 2D array of cells
+    for (let i = 0; i < 3; i++) {
+      board[i] = [];
+      for (let j = 0; j < 3; j++) {
+        board[i].push(Cell());
+      }
     }
   }
 
@@ -25,6 +27,7 @@ function Gameboard() {
   }
 
   return {
+    initializeBoard,
     getBoard,
     getBoardValues,
     getCell,
@@ -60,7 +63,12 @@ function GameController() {
       "mark": "O"
     }
   ]
-  let activePlayer = players[0];
+  let activePlayer;
+
+  const intializeGame = () => {
+    board.initializeBoard();
+    activePlayer = players[0];
+  }
 
   const switchPlayer = () => {
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -136,11 +144,14 @@ function GameController() {
     return false;
   }
 
+  intializeGame();
+
   return {
+    intializeGame,
     playRound,
     getActivePlayer,
     renamePlayer,
-    getBoard: board.getBoard
+    getBoard: board.getBoard,
   }
 }
 
@@ -150,6 +161,7 @@ const displayController = (function() {
   const spotTakenMsg = document.querySelector('#spot-taken');
   const boardDiv = document.querySelector('#board');
   const renameBtns = document.querySelectorAll('.rename-btn');
+  const restartBtn = document.querySelector('#restart');
 
   const updateDisplay = (gameOverState) => {
     const board = game.getBoard();
@@ -216,6 +228,10 @@ const displayController = (function() {
       btn.lastChild.textContent = newName;
       updateDisplay();
     })
+  })
+  restartBtn.addEventListener("click", () => {
+    game.intializeGame();
+    updateDisplay();
   })
 
   updateDisplay();
