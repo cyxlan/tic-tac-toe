@@ -12,6 +12,9 @@ body {
 
 .container {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* X & O icons */
@@ -35,7 +38,6 @@ h1,
   font-weight: 400;
   line-height: 1;
 }
-
 h1 {
   text-transform: uppercase;
   font-size: 3rem;
@@ -44,6 +46,7 @@ h1 {
   left: 0;
 }
 #game-state {
+  text-align: center;
   font-size: 4rem;
   /* X & O icons */
   &:before {
@@ -51,17 +54,6 @@ h1 {
     margin-right: 30px;
     height: 50px;
   }
-}
-
-#game-state,
-#spot-taken {
-  text-align: center;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 #board {
@@ -89,21 +81,6 @@ h1 {
   }
 }
 
-#spot-taken {
-  position: absolute;
-  right: 40px;
-  left: auto;
-  bottom: 40px;
-  font-size: 2rem;
-  border: 2px solid var(--text);
-  color: inherit;
-  padding: 20px 30px;
-  border-radius: 10px;
-  p {
-    line-height: 1;
-  }
-}
-
 .rename-btns-wrap {
   position: absolute;
   top: 0;
@@ -115,7 +92,7 @@ h1 {
 }
 .rename-btn {
   font-size: 1.5rem;
-  border: 2px solid #fff;
+  border: 2px solid var(--text);
   padding: 0 10px;
 }
 #restart {
@@ -146,5 +123,20 @@ h1 {
   svg {
     width: 24px;
     height: 24px;
+  }
+}
+
+#spot-taken {
+  position: absolute;
+  right: 40px;
+  left: auto;
+  bottom: 40px;
+  font-size: 2rem;
+  border: 2px solid var(--text);
+  color: inherit;
+  padding: 20px 30px;
+  border-radius: 10px;
+  p {
+    line-height: 1;
   }
 }
