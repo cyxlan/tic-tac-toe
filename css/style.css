@@ -101,7 +101,12 @@ h1 {
   }
   .rename-btn {
     font-size: 1.6rem;
-    width: 140px;
+    width: 160px;
+    gap: 8px;
+    /* pencil icon */
+    svg {
+      height: 20px;
+    }
   }
 }
 .player-name-wrap.player-1 {
@@ -129,19 +134,23 @@ h1 {
     background-color: var(--text);
   }
 }
-
-#restart {
-  font-size: 2rem;
+.icon-btn {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
+  svg {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+#restart {
+  font-size: 2rem;
   gap: 5px;
   width: 200px;
   text-transform: uppercase;
-  margin: 0 auto;
   /* arrow icon */
   svg {
-    width: 24px;
     height: 24px;
   }
 }
