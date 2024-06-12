@@ -46,15 +46,33 @@ h1 {
   margin: 50px auto;
   display: grid;
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-  gap: 8px;
+  gap: 6px;
   overflow: hidden; /* hide outside border lines */
   aspect-ratio: 1 / 1;
   height: min(600px, calc(100vw - 80px));
   .cell {
     height: 100%;
     width: 100%;
-    outline: 8px solid #fff;
-    font-size: 5rem;
+    outline: 6px dashed var(--text);
+    position: relative;
+    /* X & O icons */
+    &:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      aspect-ratio: 1 / 1;
+      height: 100px;
+      max-height: 60%;
+      image-rendering: pixelated; /* nearest neighbour scaling */
+    }
+    &.mark-X:after {
+      background: url(../img/x.png) no-repeat center/cover;
+    }
+    &.mark-O:after {
+      background: url(../img/o.png) no-repeat center/cover;
+    }
   }
 }
 

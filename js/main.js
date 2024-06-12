@@ -188,7 +188,10 @@ const displayController = (function() {
         cellBtn.setAttribute("type", "button");
         cellBtn.dataset.index = `${rowIndex},${cellIndex}`;
         cellBtn.classList.add("cell");
-        cellBtn.textContent = cell.getValue();
+        const cellValue = cell.getValue();
+        if (cellValue !== " ") {
+          cellBtn.classList.add(`mark-${cellValue}`);
+        }
         // if game has ended, disable buttons
         if (gameOverState) {
           cellBtn.disabled = true;
