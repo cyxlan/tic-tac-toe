@@ -15,7 +15,7 @@ body {
 }
 
 /* X & O icons */
-#game-state:before,
+#game-state:is(.mark-X, .mark-O):before,
 #board .cell:after {
   content: "";
   aspect-ratio: 1 / 1;
