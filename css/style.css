@@ -1,6 +1,11 @@
+:root {
+  --bg: rgb(56, 56, 56);
+  --text: rgb(255, 255, 255);
+}
+
 body {
-  background-color: rgb(56, 56, 56);
-  color: #fff;
+  background-color: var(--bg);
+  color: var(--text);
   padding: 40px;
   font-family: "Jersey 10", sans-serif;
 }
@@ -72,9 +77,32 @@ h1 {
   padding: 0 10px;
 }
 #restart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
   margin: 0 auto;
   width: 200px;
   font-size: 2rem;
-  border: 2px solid #fff;
+  text-transform: uppercase;
   padding: 0 10px;
+  border: 2px solid var(--text);
+  border-radius: 5px;
+  border-bottom-width: 10px;
+  transition: all 100ms ease-in-out;
+  &:hover,
+  &:focus {
+    /* button pressed effect */
+    border-bottom-width: 2px;
+    transform: translateY(8px);
+  }
+  &:active {
+    color: var(--bg);
+    background-color: var(--text);
+  }
+  /* arrow icon */
+  svg {
+    width: 24px;
+    height: 24px;
+  }
 }
