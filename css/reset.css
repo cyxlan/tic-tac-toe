@@ -18,5 +18,7 @@ dialog, button {
 button, input {
   font: inherit;
   color: inherit;
+}
+button:not(:disabled), input:not(:disabled) {
   cursor: pointer;
 }
