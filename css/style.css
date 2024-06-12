@@ -140,3 +140,23 @@ h1 {
     line-height: 1;
   }
 }
+
+/* animate dialog */
+/* open state */
+dialog[open] {
+  opacity: 1;
+}
+/* closed state */
+dialog {
+  opacity: 0;
+  transition:
+    opacity 100ms ease-in-out,
+    overlay 100ms ease-in-out allow-discrete,
+    display 100ms ease-in-out allow-discrete;
+}
+
+@starting-style {
+  dialog[open] {
+    opacity: 0;
+  }
+}
