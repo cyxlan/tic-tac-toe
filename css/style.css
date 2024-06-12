@@ -1,4 +1,17 @@
+h1,
+#game-state,
+#spot-taken {
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 #board {
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, auto);
   width: max-content;
@@ -14,6 +27,10 @@
   display: none;
 }
 
+.rename-btns-wrap {
+  width: max-content;
+  margin: 10px auto;
+}
 .rename-btn {
   border: 1px solid #000;
 }

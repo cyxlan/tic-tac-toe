@@ -12,10 +12,12 @@
   <h1>Tic Tac Toe</h1>
   <div class="container">
     <h2 id="game-state"></h2>
+    <div class="rename-btns-wrap">
+      <button class="rename-btn" data-player-index="0" type="button">Rename <span>Player 1</span></button>
+      <button class="rename-btn" data-player-index="1" type="button">Rename <span>Player 2</span></button>
+    </div>
     <div id="board"></div>
     <p id="spot-taken">Spot already taken</p>
-    <button class="rename-btn" data-player-index="0" type="button">Rename <span>Player 1</span></button>
-    <button class="rename-btn" data-player-index="1" type="button">Rename <span>Player 2</span></button>
     <button id="restart" type="button">Restart</button>
   </div>
   <script src="js/main.js"></script>
