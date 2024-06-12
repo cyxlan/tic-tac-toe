@@ -126,13 +126,13 @@ function GameController() {
     }
     // if last move was top right or bottom left corner
     else if (
-      lastMove[0] === 0 && lastMove[1] === 2 ||
-      lastMove[0] === 2 && lastMove[1] === 2
+      (lastMove[0] === 0 && lastMove[1] === 2) ||
+      (lastMove[0] === 2 && lastMove[1] === 0)
     ) {
       // top right to bottom left diagonal
-      if (boardValues[0][0] === mark &&
+      if (boardValues[0][2] === mark &&
           boardValues[1][1] === mark &&
-          boardValues[2][2] === mark
+          boardValues[2][0] === mark
       ) {
         return "win";
       }
@@ -209,7 +209,7 @@ const displayController = (function() {
   }
 
   function gameboardClickHandler(e) {
-    const index = e.target.dataset.index.split(",");
+    const index = e.target.dataset.index.split(",").map((x) => Number(x));
     
     // if playRound failed, the play was invalid due to being on an already taken spot
     try {
