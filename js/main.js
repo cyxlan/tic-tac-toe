@@ -218,9 +218,10 @@ const displayController = (function() {
       let width = 0;
       const interval = setInterval(frame, 30);
       function frame() {
-        if (width >= 100) {
+        if (width >= 100 || !spotTakenMsg.open) {
           clearInterval(interval);
           i = 0;
+          bar.style.width = "0%";
         } else {
           width++;
           bar.style.width = width + "%";
