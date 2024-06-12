@@ -8,28 +8,30 @@ body {
   color: var(--text);
   padding: 40px;
   font-family: "Jersey 10", sans-serif;
+  height: 100vh;
 }
 
 .container {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  height: 100%;
 }
 
 /* X & O icons */
 #game-state:is(.mark-X, .mark-O):before,
-#board .cell:after {
+#board .cell:after,
+.player-name-wrap p:before {
   content: "";
   aspect-ratio: 1 / 1;
   image-rendering: pixelated; /* nearest neighbour scaling */
 }
 #game-state.mark-X:before,
-#board .cell.mark-X:after {
+#board .cell.mark-X:after,
+.player-name-wrap.player-1 p:before {
   background: url(../img/x.png) no-repeat center/cover;
 }
 #game-state.mark-O:before,
-#board .cell.mark-O:after {
+#board .cell.mark-O:after,
+.player-name-wrap.player-2 p:before {
   background: url(../img/o.png) no-repeat center/cover;
 }
 
@@ -81,29 +83,35 @@ h1 {
   }
 }
 
-.rename-btns-wrap {
+.player-name-wrap {
   position: absolute;
-  top: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  width: calc((100% - 680px) / 2);
+  p {
+    font-size: 4rem;
+    line-height: 1;
+    margin-bottom: 20px;
+    &:before {
+      display: block;
+      margin: 0 auto 20px;
+      height: 60px;
+    }
+  }
+  .rename-btn {
+    font-size: 1.6rem;
+    width: 140px;
+  }
+}
+.player-name-wrap.player-1 {
+  left: 0;
+}
+.player-name-wrap.player-2 {
   right: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
 }
-.rename-btn {
-  font-size: 1.5rem;
-  border: 2px solid var(--text);
-  padding: 0 10px;
-}
-#restart {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  margin: 0 auto;
-  width: 200px;
-  font-size: 2rem;
-  text-transform: uppercase;
+
+.btn {
   padding: 0 10px;
   border: 2px solid var(--text);
   border-radius: 5px;
@@ -114,11 +122,23 @@ h1 {
     /* button pressed effect */
     border-bottom-width: 2px;
     transform: translateY(8px);
+    margin-bottom: 8px; /* prevent moving up other elements */
   }
   &:active {
     color: var(--bg);
     background-color: var(--text);
   }
+}
+
+#restart {
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 200px;
+  text-transform: uppercase;
+  margin: 0 auto;
   /* arrow icon */
   svg {
     width: 24px;

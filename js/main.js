@@ -246,8 +246,8 @@ const displayController = (function() {
     btn.addEventListener("click", () => {
       const newName = prompt("New name:");
       game.renamePlayer(btn.dataset.playerIndex, newName);
-      // update button text
-      btn.lastChild.textContent = newName;
+      // update page text
+      btn.previousElementSibling.textContent = newName;
       updateDisplay();
     })
   })

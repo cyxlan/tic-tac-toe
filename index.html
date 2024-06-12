@@ -18,12 +18,18 @@
   <div class="container">
     <h1>Tic Tac Toe</h1>
     <h2 id="game-state"></h2>
-    <div class="rename-btns-wrap">
-      <button class="rename-btn" data-player-index="0" type="button">Rename <span>Player 1</span></button>
-      <button class="rename-btn" data-player-index="1" type="button">Rename <span>Player 2</span></button>
+    <div class="rename-btns-wrap">    
     </div>
     <div id="board"></div>
-    <button id="restart" type="button">
+    <div class="player-name-wrap player-1">
+      <p>Player One</p>
+      <button class="rename-btn btn" data-player-index="0" type="button">Rename</button>
+    </div>
+    <div class="player-name-wrap player-2">
+      <p>Player Two</p>
+      <button class="rename-btn btn" data-player-index="1" type="button">Rename</button>
+    </div>
+    <button id="restart" class="btn" type="button">
       Restart
       <!-- arrow icon -->
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true" role="img">
