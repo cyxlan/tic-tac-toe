@@ -207,12 +207,10 @@ const displayController = (function() {
     })
   }
 
-  function toggleSpotTakenMsg(shown) {
-    if (shown) {
-      spotTakenMsg.style.display = "block";
-    } else {
-      spotTakenMsg.style.display = "none";
-    }
+  function showSpotTakenMsg() {
+    spotTakenMsg.show();
+    // close after 3s
+    setTimeout(() => spotTakenMsg.close(), 3000);
   }
 
   function gameboardClickHandler(e) {
@@ -221,9 +219,8 @@ const displayController = (function() {
     // if playRound failed, the play was invalid due to being on an already taken spot
     try {
       updateDisplay(game.playRound(index));
-      toggleSpotTakenMsg(false);
     } catch {
-      toggleSpotTakenMsg(true);
+      showSpotTakenMsg();
     }
   }
 
