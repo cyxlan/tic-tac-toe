@@ -208,9 +208,25 @@ const displayController = (function() {
   }
 
   function showSpotTakenMsg() {
-    spotTakenMsg.show();
-    // close after 3s
-    setTimeout(() => spotTakenMsg.close(), 3000);
+    if (!spotTakenMsg.open) {
+      spotTakenMsg.show();
+      // close after 3s
+      setTimeout(() => spotTakenMsg.close(), 3000);
+      // animate timer bar
+      const bar = document.querySelector("#spot-taken .timer-bar");
+      let i = 0;
+      let width = 0;
+      const interval = setInterval(frame, 30);
+      function frame() {
+        if (width >= 100) {
+          clearInterval(interval);
+          i = 0;
+        } else {
+          width++;
+          bar.style.width = width + "%";
+        }
+      }
+    } 
   }
 
   function gameboardClickHandler(e) {
@@ -219,6 +235,7 @@ const displayController = (function() {
     // if playRound failed, the play was invalid due to being on an already taken spot
     try {
       updateDisplay(game.playRound(index));
+      spotTakenMsg.close();
     } catch {
       showSpotTakenMsg();
     }

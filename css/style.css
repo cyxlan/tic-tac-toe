@@ -139,6 +139,13 @@ h1 {
   p {
     line-height: 1;
   }
+  .timer-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background-color: var(--text);
+  }
 }
 
 /* animate dialog */
