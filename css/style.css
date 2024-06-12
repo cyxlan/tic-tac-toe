@@ -118,6 +118,7 @@ h1 {
 
 .btn {
   padding: 0 10px;
+  margin: 0 auto;
   border: 2px solid var(--text);
   border-radius: 5px;
   border-bottom-width: 10px;
@@ -138,7 +139,6 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
   svg {
     aspect-ratio: 1 / 1;
   }
@@ -155,8 +155,12 @@ h1 {
   }
 }
 
-#spot-taken {
+dialog {
   position: absolute;
+  border-radius: 10px;
+}
+
+#spot-taken {
   right: 40px;
   left: auto;
   bottom: 40px;
@@ -164,7 +168,6 @@ h1 {
   border: 2px solid var(--text);
   color: inherit;
   padding: 20px 30px;
-  border-radius: 10px;
   p {
     line-height: 1;
   }
@@ -174,6 +177,41 @@ h1 {
     left: 0;
     height: 4px;
     background-color: var(--text);
+  }
+}
+
+#rename-popup {
+  background-color: var(--bg);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 500px;
+  padding: 40px 50px;
+  text-align: center;
+}
+#rename-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  label {
+    line-height: 1;
+    font-size: 1.6rem;
+    .current-name {
+      font-size: 2rem;
+    }
+  }
+  input {
+    color: #000;
+    background-color: var(--text);
+    font-size: 1.6rem;
+    padding: 0 10px;
+    border-radius: 5px;
+  }
+  button[type="submit"] {
+    margin-top: 20px;
+    font-size: 1.8rem;
+    width: 160px;
+    text-transform: uppercase;
   }
 }
 
@@ -194,5 +232,20 @@ dialog {
 @starting-style {
   dialog[open] {
     opacity: 0;
+  }
+}
+dialog::backdrop {
+  background-color: rgb(0 0 0 / 0%);
+  transition:
+    overlay 100ms allow-discrete,
+    display 100ms allow-discrete,
+    background-color 100ms;
+}
+dialog[open]::backdrop {
+  background-color: rgb(0 0 0 / 50%);
+}
+@starting-style {
+  dialog[open]::backdrop {
+    background-color: rgb(0 0 0 / 0%);
   }
 }

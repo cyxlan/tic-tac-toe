@@ -18,8 +18,6 @@
   <div class="container">
     <h1>Tic Tac Toe</h1>
     <h2 id="game-state"></h2>
-    <div class="rename-btns-wrap">    
-    </div>
     <div id="board"></div>
     <div class="player-name-wrap player-1">
       <p>Player One</p>
@@ -52,9 +50,18 @@
       </svg>
     </button>
   </div>
+  <!-- spot taken popup -->
   <dialog id="spot-taken">
     <p>Spot already taken!</p>
     <div class="timer-bar"></div>
+  </dialog>
+  <!-- rename player popup -->
+  <dialog id="rename-popup">
+    <form action="" method="dialog" id="rename-form">
+      <label for="new-name">New name for <span class="current-name"></span></label>
+      <input type="text" name="new-name" id="new-name" required autofocus>
+      <button type="submit" class="btn">Submit</button>
+    </form>
   </dialog>
   <script src="js/main.js"></script>
 </body>

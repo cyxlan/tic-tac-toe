@@ -10,12 +10,12 @@ body {
 p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
 }
-dialog, button {
+dialog, button, input {
   padding: 0;
   border: 0;
   background: none;
 }
-button, input {
+dialog, button, input {
   font: inherit;
   color: inherit;
 }

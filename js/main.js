@@ -75,6 +75,9 @@ function GameController() {
   }
   const getActivePlayer = () => activePlayer;
 
+  const getPlayerName = (playerIndex) => {
+    return players[playerIndex].name;
+  }
   const renamePlayer = (playerIndex, name) => {
     players[playerIndex].name = name;
   }
@@ -150,6 +153,7 @@ function GameController() {
     intializeGame,
     playRound,
     getActivePlayer,
+    getPlayerName,
     renamePlayer,
     getBoard: board.getBoard,
   }
@@ -158,10 +162,7 @@ function GameController() {
 const displayController = (function() {
   const game = GameController();
   const gameStateHeader = document.querySelector('#game-state');
-  const spotTakenMsg = document.querySelector('#spot-taken');
   const boardDiv = document.querySelector('#board');
-  const renameBtns = document.querySelectorAll('.rename-btn');
-  const restartBtn = document.querySelector('#restart');
 
   const updateDisplay = (gameOverState) => {
     const board = game.getBoard();
@@ -207,6 +208,7 @@ const displayController = (function() {
     })
   }
 
+  const spotTakenMsg = document.querySelector('#spot-taken');
   function showSpotTakenMsg() {
     if (!spotTakenMsg.open) {
       spotTakenMsg.show();
@@ -242,15 +244,23 @@ const displayController = (function() {
     }
   }
 
+  const renameBtns = document.querySelectorAll('.rename-btn');
+  const renamePopup = document.querySelector('#rename-popup');
   renameBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      const newName = prompt("New name:");
-      game.renamePlayer(btn.dataset.playerIndex, newName);
+      const currentName = game.getPlayerName([btn.dataset.playerIndex]);
+      const inputLabel = document.querySelector('#rename-form label .current-name');
+      inputLabel.textContent = currentName;
+      renamePopup.showModal();
+      
+      // const newName = prompt("New name:");
+      // game.renamePlayer(btn.dataset.playerIndex, newName);
       // update page text
-      btn.previousElementSibling.textContent = newName;
-      updateDisplay();
+      // btn.previousElementSibling.textContent = newName;
+      // updateDisplay();
     })
   })
+  const restartBtn = document.querySelector('#restart');
   restartBtn.addEventListener("click", () => {
     game.intializeGame();
     updateDisplay();
