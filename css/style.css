@@ -14,6 +14,22 @@ body {
   position: relative;
 }
 
+/* X & O icons */
+#game-state:before,
+#board .cell:after {
+  content: "";
+  aspect-ratio: 1 / 1;
+  image-rendering: pixelated; /* nearest neighbour scaling */
+}
+#game-state.mark-X:before,
+#board .cell.mark-X:after {
+  background: url(../img/x.png) no-repeat center/cover;
+}
+#game-state.mark-O:before,
+#board .cell.mark-O:after {
+  background: url(../img/o.png) no-repeat center/cover;
+}
+
 h1,
 #game-state {
   font-weight: 400;
@@ -29,6 +45,12 @@ h1 {
 }
 #game-state {
   font-size: 4rem;
+  /* X & O icons */
+  &:before {
+    display: inline-block;
+    margin-right: 30px;
+    height: 50px;
+  }
 }
 
 #game-state,
@@ -57,21 +79,12 @@ h1 {
     position: relative;
     /* X & O icons */
     &:after {
-      content: "";
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      aspect-ratio: 1 / 1;
       height: 100px;
       max-height: 60%;
-      image-rendering: pixelated; /* nearest neighbour scaling */
-    }
-    &.mark-X:after {
-      background: url(../img/x.png) no-repeat center/cover;
-    }
-    &.mark-O:after {
-      background: url(../img/o.png) no-repeat center/cover;
     }
   }
 }

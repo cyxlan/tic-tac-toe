@@ -175,12 +175,16 @@ const displayController = (function() {
         gameStateMsg = "It's a draw!"
       }
     } else {
-      gameStateMsg = `${activePlayer.name}'s turn (${activePlayer.mark})`;
+      gameStateMsg = `${activePlayer.name}'s turn`;
+    }
+    gameStateHeader.textContent = gameStateMsg;
+    // clear previous marks and add active player mark
+    gameStateHeader.classList.remove("mark-X", "mark-O");
+    if (gameOverState !== "draw") {
+      gameStateHeader.classList.add(`mark-${activePlayer.mark}`);
     }
 
-    gameStateHeader.textContent = gameStateMsg;
     boardDiv.textContent = "";
-    
     // generate cell buttons
     board.forEach((row, rowIndex) => {
       row.forEach((cell, cellIndex) => {
