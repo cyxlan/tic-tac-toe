@@ -253,6 +253,7 @@ const displayController = (function() {
   restartBtn.addEventListener("click", () => {
     game.intializeGame();
     updateDisplay();
+    spotTakenMsg.close();
   })
 
   updateDisplay();
