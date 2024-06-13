@@ -248,18 +248,31 @@ const displayController = (function() {
   const renamePopup = document.querySelector('#rename-popup');
   renameBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      const currentName = game.getPlayerName([btn.dataset.playerIndex]);
-      const inputLabel = document.querySelector('#rename-form label .current-name');
-      inputLabel.textContent = currentName;
+      const playerIndex = btn.dataset.playerIndex;
+      // update form label with current name
+      const labelCurrentName = document.querySelector('#rename-form label .current-name');
+      labelCurrentName.textContent = game.getPlayerName(playerIndex);
+      // save current player for reference when updating name on submit
+      renamePopup.dataset.playerIndex = playerIndex;
       renamePopup.showModal();
-      
-      // const newName = prompt("New name:");
-      // game.renamePlayer(btn.dataset.playerIndex, newName);
-      // update page text
-      // btn.previousElementSibling.textContent = newName;
-      // updateDisplay();
     })
   })
+  // on form submit, get inputted name & update data
+  const renameForm = document.querySelector('#rename-form');
+  const renameSubmit = document.querySelector('#rename-form button[type="submit"]');
+  renameSubmit.addEventListener("click", () => {
+    const newName = document.querySelector('#new-name').value;
+    // if user entered a name
+    if (newName) {
+      const playerIndex = renamePopup.dataset.playerIndex;
+      game.renamePlayer(playerIndex, newName);
+      // update page text
+      document.querySelector(`button[data-player-index="${playerIndex}"]`).previousElementSibling.textContent = newName;
+      updateDisplay();
+      renameForm.reset();
+    }
+  })
+
   const restartBtn = document.querySelector('#restart');
   restartBtn.addEventListener("click", () => {
     game.intializeGame();
