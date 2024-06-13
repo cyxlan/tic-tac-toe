@@ -272,6 +272,10 @@ const displayController = (function() {
       renameForm.reset();
     }
   })
+  const closeBtn = document.querySelector('#rename-popup .close-btn');
+  closeBtn.addEventListener("click", () => {
+    renamePopup.close();
+  })
 
   const restartBtn = document.querySelector('#restart');
   restartBtn.addEventListener("click", () => {

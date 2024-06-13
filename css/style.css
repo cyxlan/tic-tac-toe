@@ -181,6 +181,7 @@ dialog {
 }
 
 #rename-popup {
+  position: relative;
   background-color: var(--bg);
   top: 50%;
   left: 50%;
@@ -212,6 +213,15 @@ dialog {
     font-size: 1.8rem;
     width: 160px;
     text-transform: uppercase;
+  }
+  .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: var(--text);
+    svg {
+      height: 24px;
+    }
   }
 }
 
