@@ -17,21 +17,21 @@ body {
 }
 
 /* X & O icons */
-#game-state:is(.mark-X, .mark-O):before,
-#board .cell:after,
-.player-name-wrap p:before {
+#game-state:is(.mark-X, .mark-O)::before,
+#board .cell::after,
+.player-name-wrap p::before {
   content: "";
   aspect-ratio: 1 / 1;
   image-rendering: pixelated; /* nearest neighbour scaling */
 }
-#game-state.mark-X:before,
-#board .cell.mark-X:after,
-.player-name-wrap.player-1 p:before {
+#game-state.mark-X::before,
+#board .cell.mark-X::after,
+.player-name-wrap.player-1 p::before {
   background: url(../img/x.png) no-repeat center/cover;
 }
-#game-state.mark-O:before,
-#board .cell.mark-O:after,
-.player-name-wrap.player-2 p:before {
+#game-state.mark-O::before,
+#board .cell.mark-O::after,
+.player-name-wrap.player-2 p::before {
   background: url(../img/o.png) no-repeat center/cover;
 }
 
@@ -51,7 +51,7 @@ h1 {
   text-align: center;
   font-size: 4rem;
   /* X & O icons */
-  &:before {
+  &::before {
     display: inline-block;
     margin-right: 30px;
     height: 50px;
@@ -72,7 +72,7 @@ h1 {
     outline: 6px dashed var(--text);
     position: relative;
     /* X & O icons */
-    &:after {
+    &::after {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -93,7 +93,7 @@ h1 {
     font-size: 4rem;
     line-height: 1;
     margin-bottom: 20px;
-    &:before {
+    &::before {
       display: block;
       margin: 0 auto 20px;
       height: 60px;
