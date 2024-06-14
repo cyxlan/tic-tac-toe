@@ -65,7 +65,7 @@ h1 {
   gap: 6px;
   overflow: hidden; /* hide outside border lines */
   aspect-ratio: 1 / 1;
-  height: min(600px, calc(100vw - 80px));
+  height: min(60vh, calc(100vw - 80px));
   .cell {
     height: 100%;
     width: 100%;
