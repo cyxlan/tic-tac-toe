@@ -1,6 +1,6 @@
 # Tic Tac Toe
 
-[Live preview](https://cyxlan.github.io/library/)
+[Live preview](https://cyxlan.github.io/tic-tac-toe/)
 
 Tic Tac Toe browser game.
 
